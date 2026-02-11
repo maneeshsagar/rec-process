@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  meetup:
+    build: .
+    container_name: meetup-server
+    restart: unless-stopped
+    ports:
+      - "${PORT:-3000}:3000"
+      # mediasoup RTC ports (must match MEDIASOUP_MIN/MAX_PORT)
+      - "40000-49999:40000-49999/udp"
+      - "40000-49999:40000-49999/tcp"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - MEDIASOUP_ANNOUNCED_IP=${MEDIASOUP_ANNOUNCED_IP}
+      - MEDIASOUP_MIN_PORT=40000
+      - MEDIASOUP_MAX_PORT=49999
+      - MEDIASOUP_NUM_WORKERS=${MEDIASOUP_NUM_WORKERS:-2}
+      - CORS_ORIGIN=${CORS_ORIGIN}
+      - TURN_URLS=${TURN_URLS:-}
+      - TURN_USERNAME=${TURN_USERNAME:-}
+      - TURN_CREDENTIAL=${TURN_CREDENTIAL:-}
+      - ROOM_MAX_PEERS=${ROOM_MAX_PEERS:-100}
+    # For direct SSL (optional – most use nginx reverse proxy)
+    # volumes:
+    #   - /etc/letsencrypt:/etc/letsencrypt:ro
+    # environment:
+    #   - SSL_CERT_PATH=/etc/letsencrypt/live/yourdomain.com/fullchain.pem
+    #   - SSL_KEY_PATH=/etc/letsencrypt/live/yourdomain.com/privkey.pem
+    networks:
+      - meetup-net
+    # Network mode host is recommended for mediasoup (avoids Docker NAT)
+    # Uncomment below and remove ports: section if using host networking:
+    # network_mode: host
+
+networks:
+  meetup-net:
+    driver: bridge

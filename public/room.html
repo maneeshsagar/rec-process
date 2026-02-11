@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MeetUp — Meeting Room</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="room-body">
+  <!-- Top Bar -->
+  <header class="room-topbar">
+    <div class="topbar-left">
+      <div class="logo-sm">
+        <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
+          <rect width="36" height="36" rx="8" fill="#4285F4"/>
+          <path d="M10 13C10 11.8954 10.8954 11 12 11H20C21.1046 11 22 11.8954 22 13V23C22 24.1046 21.1046 25 20 25H12C10.8954 25 10 24.1046 10 23V13Z" fill="white"/>
+          <path d="M22 15L27 12V24L22 21V15Z" fill="white"/>
+        </svg>
+      </div>
+      <span class="room-id-display" id="roomIdDisplay"></span>
+    </div>
+    <div class="topbar-right">
+      <span class="peer-count" id="peerCount">1</span>
+      <button class="icon-btn" id="copyLinkBtn" title="Copy meeting link">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101"/>
+          <path d="M10.172 13.828a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="room-content">
+    <!-- Video Grid -->
+    <div class="video-grid" id="videoGrid">
+      <!-- Local video -->
+      <div class="video-tile local-tile" id="localTile" data-peer-id="local">
+        <video id="localVideo" autoplay muted playsinline></video>
+        <div class="tile-overlay">
+          <span class="tile-name" id="localName">You</span>
+          <div class="tile-indicators">
+            <span class="indicator mic-indicator" id="localMicIndicator" title="Microphone">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div class="tile-no-video" id="localNoVideo" style="display:none">
+          <div class="avatar-circle" id="localAvatar">Y</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Panel (Side) -->
+    <div class="chat-panel" id="chatPanel">
+      <div class="chat-header">
+        <h3>In-call messages</h3>
+        <button class="icon-btn chat-close-btn" id="chatCloseBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="chat-messages" id="chatMessages">
+        <div class="chat-empty" id="chatEmpty">
+          <p>Messages can only be seen by people in the call and are deleted when the call ends.</p>
+        </div>
+      </div>
+      <div class="chat-input-area">
+        <input type="text" id="chatInput" class="input chat-input" placeholder="Send a message to everyone" maxlength="2000" />
+        <button class="icon-btn send-btn" id="chatSendBtn" title="Send message">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Toolbar -->
+  <footer class="room-toolbar">
+    <div class="toolbar-center">
+      <button class="tool-btn" id="micBtn" title="Toggle microphone">
+        <svg class="icon-on" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+          <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+        </svg>
+        <svg class="icon-off" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display:none">
+          <path d="M19 11h-1.7c0 .74-.16 1.43-.43 2.05l1.23 1.23c.56-.98.9-2.09.9-3.28zm-4.02.17c0-.06.02-.11.02-.17V5c0-1.66-1.34-3-3-3S9 3.34 9 5v.18l5.98 5.99zM4.27 3L3 4.27l6.01 6.01V11c0 1.66 1.33 3 2.99 3 .22 0 .44-.03.65-.08l1.66 1.66c-.71.33-1.5.52-2.31.52-2.76 0-5.3-2.1-5.3-5.1H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c.91-.13 1.77-.45 2.54-.9L19.73 21 21 19.73 4.27 3z"/>
+        </svg>
+        <span class="tool-label">Mic</span>
+      </button>
+
+      <button class="tool-btn" id="camBtn" title="Toggle camera">
+        <svg class="icon-on" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/>
+        </svg>
+        <svg class="icon-off" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display:none">
+          <path d="M21 6.5l-4 4V7c0-.55-.45-1-1-1H9.82L21 17.18V6.5zM3.27 2L2 3.27 4.73 6H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.21 0 .39-.08.54-.18L19.73 21 21 19.73 3.27 2z"/>
+        </svg>
+        <span class="tool-label">Camera</span>
+      </button>
+
+      <button class="tool-btn" id="screenBtn" title="Share screen">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/>
+        </svg>
+        <span class="tool-label">Screen</span>
+      </button>
+
+      <button class="tool-btn" id="chatBtn" title="Toggle chat">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+        </svg>
+        <span class="tool-label">Chat</span>
+        <span class="chat-badge" id="chatBadge" style="display:none">0</span>
+      </button>
+
+      <button class="tool-btn leave-btn" id="leaveBtn" title="Leave meeting">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 9c-1.6 0-3.15.25-4.6.72v3.1c0 .39-.23.74-.56.9-.98.49-1.87 1.12-2.66 1.85-.18.18-.43.28-.7.28-.28 0-.53-.11-.71-.29L.29 13.08c-.18-.17-.29-.42-.29-.7 0-.28.11-.53.29-.71C3.34 8.78 7.46 7 12 7s8.66 1.78 11.71 4.67c.18.18.29.43.29.71 0 .28-.11.53-.29.71l-2.48 2.48c-.18.18-.43.29-.71.29-.27 0-.52-.11-.7-.28-.79-.74-1.69-1.36-2.67-1.85-.33-.16-.56-.5-.56-.9v-3.1C15.15 9.25 13.6 9 12 9z"/>
+        </svg>
+        <span class="tool-label">Leave</span>
+      </button>
+    </div>
+  </footer>
+
+  <!-- Connecting overlay -->
+  <div class="connecting-overlay" id="connectingOverlay">
+    <div class="connecting-spinner"></div>
+    <p>Joining meeting...</p>
+  </div>
+
+  <!-- Toast notifications -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="/js/bundle.js"></script>
+</body>
+</html>

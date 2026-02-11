@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MeetUp — Video Conferencing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="landing-body">
+  <div class="landing-container">
+    <header class="landing-header">
+      <div class="logo">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <rect width="36" height="36" rx="8" fill="#4285F4"/>
+          <path d="M10 13C10 11.8954 10.8954 11 12 11H20C21.1046 11 22 11.8954 22 13V23C22 24.1046 21.1046 25 20 25H12C10.8954 25 10 24.1046 10 23V13Z" fill="white"/>
+          <path d="M22 15L27 12V24L22 21V15Z" fill="white"/>
+        </svg>
+        <span>MeetUp</span>
+      </div>
+    </header>
+
+    <main class="landing-main">
+      <div class="landing-hero">
+        <h1>Premium video meetings.<br/>Now free for everyone.</h1>
+        <p class="landing-subtitle">
+          Secure, high-quality video calls for teams and friends.
+          Create a meeting or enter a code to join.
+        </p>
+
+        <div class="landing-actions">
+          <button id="createMeetingBtn" class="btn btn-primary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"/>
+            </svg>
+            New meeting
+          </button>
+
+          <div class="join-input-group">
+            <input
+              type="text"
+              id="roomCodeInput"
+              class="input"
+              placeholder="Enter a meeting code"
+              spellcheck="false"
+              autocomplete="off"
+            />
+            <button id="joinMeetingBtn" class="btn btn-text" disabled>Join</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="landing-illustration">
+        <div class="illustration-grid">
+          <div class="illustration-card card-1">
+            <div class="card-avatar"></div>
+            <div class="card-lines"><span></span><span></span></div>
+          </div>
+          <div class="illustration-card card-2">
+            <div class="card-avatar"></div>
+            <div class="card-lines"><span></span><span></span></div>
+          </div>
+          <div class="illustration-card card-3">
+            <div class="card-avatar"></div>
+            <div class="card-lines"><span></span><span></span></div>
+          </div>
+          <div class="illustration-card card-4">
+            <div class="card-avatar"></div>
+            <div class="card-lines"><span></span><span></span></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Name modal -->
+  <div id="nameModal" class="modal-overlay" style="display:none">
+    <div class="modal">
+      <h2>What's your name?</h2>
+      <p>Enter your display name before joining the meeting.</p>
+      <input type="text" id="displayNameInput" class="input" placeholder="Your name" maxlength="30" autofocus />
+      <div class="modal-actions">
+        <button id="modalCancelBtn" class="btn btn-ghost">Cancel</button>
+        <button id="modalJoinBtn" class="btn btn-primary">Join meeting</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
