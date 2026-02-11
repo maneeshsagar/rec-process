@@ -602,9 +602,9 @@ async function main() {
 
   await createWorkers();
 
-  server.listen(config.port, () => {
+  server.listen(config.port, '0.0.0.0', () => {
     const protocol = config.sslCert ? 'https' : 'http';
-    log.info(`MeetUp server running at ${protocol}://localhost:${config.port}`);
+    log.info(`MeetUp server running at ${protocol}://0.0.0.0:${config.port}`);
     log.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
     log.info(`Workers: ${workers.length}, Max peers/room: ${config.room.maxPeersPerRoom || 'unlimited'}`);
   });
