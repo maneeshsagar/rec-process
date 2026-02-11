@@ -12,8 +12,9 @@ const config = {
   sslCert: process.env.SSL_CERT_PATH || '',
   sslKey: process.env.SSL_KEY_PATH || '',
 
-  // CORS – restrict in production
-  corsOrigin: process.env.CORS_ORIGIN || (isProd ? undefined : '*'),
+  // CORS – set CORS_ORIGIN in .env to restrict (e.g., https://meet.yourdomain.com)
+  // Defaults to '*' (allow all) if not set – fine for testing, lock down for production
+  corsOrigin: process.env.CORS_ORIGIN || '*',
 
   // Room settings
   room: {

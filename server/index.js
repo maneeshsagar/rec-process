@@ -37,7 +37,9 @@ app.set('trust proxy', isProd ? 1 : false);
 app.use(compression());
 app.use(
   helmet({
-    contentSecurityPolicy: isProd
+    // Disable CSP when running HTTP without SSL (CSP can block mixed content).
+    // Enable strict CSP only when you have proper HTTPS set up.
+    contentSecurityPolicy: (config.sslCert && config.sslKey)
       ? {
           directives: {
             defaultSrc: ["'self'"],
@@ -51,6 +53,8 @@ app.use(
         }
       : false,
     crossOriginEmbedderPolicy: false,
+    // Don't set HSTS when running plain HTTP
+    strictTransportSecurity: !!(config.sslCert && config.sslKey),
   })
 );
 app.use(express.json({ limit: '1kb' })); // Small limit – we don't accept large payloads
